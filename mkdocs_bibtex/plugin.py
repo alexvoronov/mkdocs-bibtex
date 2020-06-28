@@ -17,6 +17,7 @@ class BibTexPlugin(BasePlugin):
     config_scheme = [
         ("bib_file", config_options.Type(str, required=True)),  # TODO: multiple files.
         ("csl_file", config_options.Type(str, required=False)),
+        ("pandoc_output_format", config_options.Type(str, required=False)),
     ]
 
     def on_config(self, config):
@@ -25,12 +26,13 @@ class BibTexPlugin(BasePlugin):
 
         self.csl_path = get_path(self.config.get("csl_file", None), config_path)
         self.bib_path = get_path(self.config["bib_file"], config_path)
+        self.pandoc_output_format = self.config.get("pandoc_output_format", "markdown_strict")
 
         return config
 
     def on_page_markdown(self, markdown, page, config, files):
 
-        to = "markdown_strict"
+        to = self. pandoc_output_format  # "markdown_strict", "gfm", "markdown-citations".
         input_format = "md"
         extra_args = []
 

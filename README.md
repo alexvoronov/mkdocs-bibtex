@@ -1,29 +1,31 @@
-[![testing](https://github.com/shyamd/mkdocs-bibtex/workflows/testing/badge.svg)](https://github.com/shyamd/mkdocs-bibtex/actions?query=workflow%3Atesting)
-[![codecov](https://codecov.io/gh/shyamd/mkdocs-bibtex/branch/master/graph/badge.svg)](https://codecov.io/gh/shyamd/mkdocs-bibtex)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/shyamd/mkdocs-bibtex.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/shyamd/mkdocs-bibtex/context:python)
-
 # mkdocs-bibtex
 
-A [MkDocs](https://www.mkdocs.org/) plugin for citation management using bibtex.
+A [MkDocs](https://www.mkdocs.org/) plugin for citation management using bibtex, with Pandoc backend.
+
+This plugin uses Pandoc, and processes not only the bibliography, but everything else 
+that Pandoc can handle. It outputs Pandoc's "strict markdown", converting any 
+tags/extensions that Pandoc can recognize into plain markdown.
 
 ## Setup
 
 Install the plugin using pip:
 
 ```
-pip install mkdocs-bibtex
+git clone https://github.com/alexvoronov/mkdocs-bibtex.git
+cd mkdocs-bibtex
+pip install -e .
 ```
 
 This version relies on Pandoc through [pypandoc](https://pypi.org/project/pypandoc/). 
 Pypandoc provides Pandoc on many systems, otherwise, you have to install Pandoc manually, 
-see pypandoc documentation for more details. 
+see pypandoc documentation for more details.
 
 Next, add the following lines to your `mkdocs.yml`:
 
 ```yml
 plugins:
   - search
-  - bibtex:
+  - bibtex-pandoc:
       bib_file: "refs.bib"
 ```
 
@@ -31,8 +33,9 @@ plugins:
 
 ## Options
 
-- `bib_file` - Name of your bibtex file. Either the absolute path or the path relative to `mkdocs.yml`.
-- `csl_file` - Name of your [CSL](https://citationstyles.org/) file. Either the absolute path or the path relative to `mkdocs.yml`
+* `bib_file` - Name of your bibtex file. Either the absolute path or the path relative to `mkdocs.yml`.
+* `csl_file` - Name of your [CSL](https://citationstyles.org/) file. Either the absolute path or the path relative to `mkdocs.yml`.
+* `pandoc_output_format` - `markdown_strict` (default), `gfm` (github-flavored-markdown), `markdown-citation`, or any other [Pandoc output format (`--to` option)](https://pandoc.org/MANUAL.html#option--to) compatible with MkDocs.
 
 ## Usage
 
